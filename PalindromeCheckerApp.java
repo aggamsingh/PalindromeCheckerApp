@@ -18,15 +18,15 @@ public class PalindromeCheckerApp {
         // UC7: Deque Initialization
         Deque<Character> deque = new ArrayDeque<>();
 
-        // Add each character to the deque
+        // Add characters to the deque
         for (char c : input.toCharArray()) {
             deque.addLast(c);
         }
 
-        // Logic: Compare front and rear elements until one or zero remain
+        // Logic: Bidirectional Traversal
         boolean isPalindrome = true;
         while (deque.size() > 1) {
-            // Remove from both ends and compare
+            // Compare and remove from both ends simultaneously
             if (!deque.removeFirst().equals(deque.removeLast())) {
                 isPalindrome = false;
                 break;
@@ -35,7 +35,6 @@ public class PalindromeCheckerApp {
 
         // Print Result
         System.out.println("Is Palindrome? : " + isPalindrome);
-        
         scanner.close();
     }
 }
