@@ -1,5 +1,7 @@
 import java.util.Scanner;
-import java.util.Stack; // Required for UC5
+import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -11,36 +13,30 @@ public class PalindromeCheckerApp {
 
         // UC3: Dynamic User Input
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a string to check (UC5 Stack-Based): ");
+        System.out.print("Input : ");
         String input = scanner.nextLine(); 
 
-        // UC4: Data Normalization
-        String cleanInput = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-        // UC5: Stack-Based Logic
+        // UC6: Queue (FIFO) and Stack (LIFO) Initialization
+        Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // 1. Push characters into stack
-        for (char c : cleanInput.toCharArray()) {
+        // Add characters to both structures
+        for (char c : input.toCharArray()) {
+            queue.add(c);
             stack.push(c);
         }
 
-        // 2. Pop and compare
+        // Logical Comparison: Matching dequeue output with pop output
         boolean isPalindrome = true;
-        for (char c : cleanInput.toCharArray()) {
-            if (c != stack.pop()) {
+        while (!queue.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // 3. Print result
-        if (!cleanInput.isEmpty() && isPalindrome) {
-            System.out.println("Result: '" + input + "' is a Palindrome.");
-        } else {
-            System.out.println("Result: '" + input + "' is NOT a Palindrome.");
-        }
-
+        // Result Output
+        System.out.println("Is Palindrome? : " + isPalindrome);
         scanner.close();
     }
 }
