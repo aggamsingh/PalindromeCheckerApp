@@ -16,29 +16,27 @@ public class PalindromeCheckerApp {
         System.out.print("Input : ");
         String input = scanner.nextLine(); 
 
-        // UC6: Queue + Stack Initialization
+        // UC6: Queue (FIFO) and Stack (LIFO) Initialization
         Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Insert each character into both structures
+        // Add characters to both structures
         for (char c : input.toCharArray()) {
-            queue.add(c);  // FIFO
-            stack.push(c); // LIFO
+            queue.add(c);
+            stack.push(c);
         }
 
-        // Logical Comparison
+        // Logical Comparison: Matching dequeue output with pop output
         boolean isPalindrome = true;
         while (!queue.isEmpty()) {
-            // Compare dequeue (front) with pop (top)
             if (!queue.remove().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Print Result
+        // Result Output
         System.out.println("Is Palindrome? : " + isPalindrome);
-        
         scanner.close();
     }
 }
