@@ -1,4 +1,4 @@
-import java.util.Scanner; // Required for User Input
+import java.util.Scanner;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -11,21 +11,25 @@ public class PalindromeCheckerApp {
         // UC3: Dynamic User Input
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a string to check: ");
-        String input = scanner.nextLine(); 
+        String originalInput = scanner.nextLine(); 
+
+        // UC4: Data Normalization (Cleaning)
+        // This removes all non-alphanumeric characters and converts to lowercase
+        String cleanInput = originalInput.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
         
-        // UC2 Logic: Reverse the string
+        // UC2 Logic: Reverse the cleaned string
         String reversed = "";
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed += input.charAt(i);
+        for (int i = cleanInput.length() - 1; i >= 0; i--) {
+            reversed += cleanInput.charAt(i);
         }
 
-        // Comparison logic
-        if (input.equalsIgnoreCase(reversed)) {
-            System.out.println("Result: '" + input + "' is a Palindrome.");
+        // Comparison logic using the cleaned version
+        if (!cleanInput.isEmpty() && cleanInput.equals(reversed)) {
+            System.out.println("Result: '" + originalInput + "' is a Palindrome.");
         } else {
-            System.out.println("Result: '" + input + "' is NOT a Palindrome.");
+            System.out.println("Result: '" + originalInput + "' is NOT a Palindrome.");
         }
         
-        scanner.close(); // Good practice to close the resource
+        scanner.close();
     }
 }
