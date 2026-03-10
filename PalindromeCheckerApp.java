@@ -1,46 +1,59 @@
-import java.util.Scanner;
+import java.util.*;
+
+// Interface from UC12
+interface PalindromeStrategy {
+    boolean check(String input);
+}
+
+// Concrete Strategy A: Deque
+class DequeStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char c : clean.toCharArray()) deque.addLast(c);
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) return false;
+        }
+        return true;
+    }
+}
+
+// Concrete Strategy B: Recursive
+class RecursiveStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        return isPalindrome(clean, 0, clean.length() - 1);
+    }
+    private boolean isPalindrome(String s, int start, int end) {
+        if (start >= end) return true;
+        if (s.charAt(start) != s.charAt(end)) return false;
+        return isPalindrome(s, start + 1, end - 1);
+    }
+}
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        // UC1: Welcome Message
-        System.out.println("Welcome to the Palindrome Checker Management System");
-        System.out.println("Version : 1.0");
-        System.out.println("System initialized successfully.");
-        System.out.println("---------------------------------------------------");
-
-        // UC3: Dynamic User Input
+        System.out.println("--- UC13: Performance Benchmarking System ---");
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input : ");
-        String input = scanner.nextLine(); 
+        String input = scanner.nextLine();
 
-        // UC9: Recursive Logic Call
-        // Starting at index 0 and length - 1
-        boolean isPalindrome = check(input, 0, input.length() - 1);
+        // Strategy to test
+        PalindromeStrategy strategy = new DequeStrategy();
 
-        // Print Result
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        // Capture Start Time
+        long startTime = System.nanoTime();
+
+        // Run the algorithm
+        boolean result = strategy.check(input);
+
+        // Capture End Time and Calculate Duration
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+
+        System.out.println("Is Palindrome? : " + result);
+        System.out.println("Execution Time : " + duration + " ns"); // Display in nanoseconds
+        
         scanner.close();
-    }
-
-    /**
-     * Recursively checks whether a string is a palindrome.
-     * @param s Input string
-     * @param start Starting index
-     * @param end Ending index
-     * @return true if palindrome, otherwise false
-     */
-    private static boolean check(String s, int start, int end) {
-        // Base Condition: prevents infinite recursion
-        if (start >= end) {
-            return true;
-        }
-
-        // Recursive call compares start & end characters
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        // Call the method again with moving indices
-        return check(s, start + 1, end - 1);
     }
 }
