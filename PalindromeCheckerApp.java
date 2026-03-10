@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -10,31 +8,41 @@ public class PalindromeCheckerApp {
         System.out.println("System initialized successfully.");
         System.out.println("---------------------------------------------------");
 
-        // UC3: Dynamic User Input
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input : ");
         String input = scanner.nextLine(); 
 
-        // UC7: Deque Initialization
-        Deque<Character> deque = new ArrayDeque<>();
+        // UC11: Using the Encapsulated Service
+        PalindromeService service = new PalindromeService();
+        boolean result = service.checkPalindrome(input);
 
-        // Add characters to the deque
-        for (char c : input.toCharArray()) {
-            deque.addLast(c);
-        }
+        System.out.println("Is Palindrome? : " + result);
+        scanner.close();
+    }
+}
 
-        // Logic: Bidirectional Traversal
-        boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            // Compare and remove from both ends simultaneously
-            if (!deque.removeFirst().equals(deque.removeLast())) {
-                isPalindrome = false;
-                break;
+/**
+ * Service class that contains the encapsulated palindrome logic.
+ * Demonstrates the Single Responsibility Principle.
+ */
+class PalindromeService {
+    /**
+     * Checks whether the input string is a palindrome.
+     * @param input Input string
+     * @return true if palindrome, false otherwise
+     */
+    public boolean checkPalindrome(String input) {
+        if (input == null || input.isEmpty()) return false;
+
+        // Apply UC10 Normalization
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        // Optimized symmetric check
+        for (int i = 0; i < clean.length() / 2; i++) {
+            if (clean.charAt(i) != clean.charAt(clean.length() - 1 - i)) {
+                return false;
             }
         }
-
-        // Print Result
-        System.out.println("Is Palindrome? : " + isPalindrome);
-        scanner.close();
+        return true;
     }
 }
