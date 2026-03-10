@@ -1,6 +1,5 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.ArrayDeque;
+import java.util.LinkedList; // Required for UC8
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -15,25 +14,25 @@ public class PalindromeCheckerApp {
         System.out.print("Input : ");
         String input = scanner.nextLine(); 
 
-        // UC7: Deque Initialization
-        Deque<Character> deque = new ArrayDeque<>();
+        // UC8: Linked List Based Palindrome Checker
+        LinkedList<Character> list = new LinkedList<>();
 
-        // Add each character to the deque
+        // 1. Convert string to linked list
         for (char c : input.toCharArray()) {
-            deque.addLast(c);
+            list.add(c);
         }
 
-        // Logic: Compare front and rear elements until one or zero remain
+        // 2. Compare halves by removing from both ends
         boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            // Remove from both ends and compare
-            if (!deque.removeFirst().equals(deque.removeLast())) {
+        while (list.size() > 1) {
+            // Linked list supports double-ended operations
+            if (!list.removeFirst().equals(list.removeLast())) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Print Result
+        // 3. Print result
         System.out.println("Is Palindrome? : " + isPalindrome);
         
         scanner.close();
