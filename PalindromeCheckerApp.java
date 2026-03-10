@@ -1,3 +1,32 @@
+
+import java.util.Scanner;
+
+public class PalindromeCheckerApp {
+    public static void main(String[] args) {
+        // UC1: Welcome Message
+        System.out.println("Welcome to the Palindrome Checker Management System");
+        System.out.println("Version : 1.0");
+        System.out.println("System initialized successfully.");
+        System.out.println("---------------------------------------------------");
+
+        // UC3: Dynamic User Input
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input : ");
+        String originalInput = scanner.nextLine(); 
+
+        // UC10: Normalize String
+        // Removes spaces/symbols and converts to lowercase
+        String normalized = originalInput.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        // Comparison Logic: Symmetric Check
+        boolean isPalindrome = true;
+        for (int i = 0; i < normalized.length() / 2; i++) {
+            // Compare characters from both ends moving inward
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+
 import java.util.*;
 
 // 1. THE INTERFACE: Defines the "Strategy"
@@ -13,6 +42,7 @@ class DequeStrategy implements PalindromeStrategy {
         for (char c : clean.toCharArray()) deque.addLast(c);
         while (deque.size() > 1) {
             if (!deque.removeFirst().equals(deque.removeLast())) return false;
+
         }
         return true;
     }
@@ -39,11 +69,14 @@ public class PalindromeCheckerApp {
         System.out.print("Input : ");
         String input = scanner.nextLine();
 
+        // Print Result
+        System.out.println("Is Palindrome? : " + isPalindrome);
+
         // You can swap 'new DequeStrategy()' with 'new RecursiveStrategy()' 
         // without changing any other code! This is the power of UC12.
         PalindromeStrategy strategy = new DequeStrategy(); 
         
         System.out.println("Is Palindrome? : " + strategy.check(input));
-        scanner.close();
+   scanner.close();
     }
 }
