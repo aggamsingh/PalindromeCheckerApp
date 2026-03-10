@@ -9,9 +9,41 @@ public class PalindromeCheckerApp {
         System.out.println("System initialized successfully.");
         System.out.println("---------------------------------------------------");
 
-        // UC3: Dynamic User Input
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input : ");
+
+        String input = scanner.nextLine(); 
+
+        // UC11: Using the Encapsulated Service
+        PalindromeService service = new PalindromeService();
+        boolean result = service.checkPalindrome(input);
+
+        System.out.println("Is Palindrome? : " + result);
+        scanner.close();
+    }
+}
+
+/**
+ * Service class that contains the encapsulated palindrome logic.
+ * Demonstrates the Single Responsibility Principle.
+ */
+class PalindromeService {
+    /**
+     * Checks whether the input string is a palindrome.
+     * @param input Input string
+     * @return true if palindrome, false otherwise
+     */
+    public boolean checkPalindrome(String input) {
+        if (input == null || input.isEmpty()) return false;
+
+        // Apply UC10 Normalization
+        String clean = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        // Optimized symmetric check
+        for (int i = 0; i < clean.length() / 2; i++) {
+            if (clean.charAt(i) != clean.charAt(clean.length() - 1 - i)) {
+                return false;
+
         String originalInput = scanner.nextLine(); 
 
         // UC10: Normalize String
@@ -25,6 +57,7 @@ public class PalindromeCheckerApp {
             if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
                 isPalindrome = false;
                 break;
+
             }
 
 import java.util.*;
@@ -78,5 +111,6 @@ public class PalindromeCheckerApp {
         
         System.out.println("Is Palindrome? : " + strategy.check(input));
    scanner.close();
+
     }
 }
