@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.LinkedList; // Required for UC8
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -14,27 +13,34 @@ public class PalindromeCheckerApp {
         System.out.print("Input : ");
         String input = scanner.nextLine(); 
 
-        // UC8: Linked List Based Palindrome Checker
-        LinkedList<Character> list = new LinkedList<>();
+        // UC9: Recursive Logic Call
+        // Starting at index 0 and length - 1
+        boolean isPalindrome = check(input, 0, input.length() - 1);
 
-        // 1. Convert string to linked list
-        for (char c : input.toCharArray()) {
-            list.add(c);
-        }
-
-        // 2. Compare halves by removing from both ends
-        boolean isPalindrome = true;
-        while (list.size() > 1) {
-            // Linked list supports double-ended operations
-            if (!list.removeFirst().equals(list.removeLast())) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // 3. Print result
+        // Print Result
         System.out.println("Is Palindrome? : " + isPalindrome);
-        
         scanner.close();
+    }
+
+    /**
+     * Recursively checks whether a string is a palindrome.
+     * @param s Input string
+     * @param start Starting index
+     * @param end Ending index
+     * @return true if palindrome, otherwise false
+     */
+    private static boolean check(String s, int start, int end) {
+        // Base Condition: prevents infinite recursion
+        if (start >= end) {
+            return true;
+        }
+
+        // Recursive call compares start & end characters
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
+        }
+
+        // Call the method again with moving indices
+        return check(s, start + 1, end - 1);
     }
 }
